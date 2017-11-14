@@ -1,4 +1,6 @@
 ## Argumentation Framework
+Master Degree in Computer Science, University of Bari.
+Case study for Artificial Intelligence course.
 #### Abstract Argumentation Solving Integrity Constraints
 
 Prolog version used: YAP 6.2.2
@@ -12,6 +14,8 @@ This folder contains also a module that deal with dataset corrupution. If you ar
 
 * `/knowledge-base`: it's where the output of the `kb-construcition`'s process is stored.
 
-* `/graph-construction`: This folder contains files that deal with the graph construction process starting from a knowledge base (possibly corrupted). This phase is based on a set of ad-hoc constraint (stored in the  `/graph-construction/constraints` folder), that explain what kinds of fact can coexist in the knowledge base. Based on these constraints, a set of labeled edge (attack edge or support edge) is generated, and the graph is built.
+* `/graph-construction`: This folder contains files that deal with the graph construction process starting from a knowledge base. This phase is based on a set of ad-hoc constraint (stored in the  `/graph-construction/constraints` folder), that explain what kinds of fact can coexist in the knowledge base. Based on these constraints, a set of labeled edge (attack edge or support edge) is generated, and the graph is built. Outputs of this phase (graphs) will be placed in the project folder `/graph-construction/output/`
 
-* `/graph`: it's where the output of the `graph-construcition`'s process is stored.
+* `/graph-fixing`: this folder contains files and tools to extract extensions from graph using [ASPARTIX](https://www.dbai.tuwien.ac.at/proj/argumentation/systempage/) tool. A set of file.tun will be produced.
+
+* `/output` : in this folder will be placed the final output of this study (a set of file.tun). You can use [INTHELEX](http://lacam.di.uniba.it/systems/inthelex/index.html) system to learn a theory from the starting dataset.
