@@ -1,0 +1,829 @@
+/* Large family dataset.  The positive instances were automatically generated, using the
+   theory
+
+      wife(A, B) :- fdt:gender(A, female), fdt:married(A, B).
+      husband(A, B) :- fdt:gender(A, male), fdt:married(A, B).
+      mother(A, B) :- fdt:gender(A, female), fdt:parent(A, B).
+      father(A, B) :- fdt:gender(A, male), fdt:parent(A, B).
+      daughter(A, B) :- fdt:gender(A, female), fdt:parent(B, A).
+      son(A, B) :- fdt:gender(A, male), fdt:parent(B, A).
+      sister(A, B) :- fdt:gender(A, female), sibling(A, B).
+      brother(A, B) :- fdt:gender(A, male), sibling(A, B).
+      aunt(A, B) :- fdt:gender(A, female), au(A, B).
+      uncle(A, B) :- fdt:gender(A, male), au(A, B).
+      niece(A, B) :- fdt:gender(A, female), au(B, A).
+      nephew(A, B) :- fdt:gender(A, male), au(B, A).
+      au(A, B) :- fdt:married(A, C), sibling(C, D), fdt:parent(D, B).
+      au(A, B) :- sibling(A, C), fdt:parent(C, B).
+      sibling(A, B) :- fdt:parent(C, A), fdt:parent(C, B), A \= B.
+
+   There are 744 positive instances.
+*/
+
+top_level_predicates([ wife(person,person), husband(person,person), mother(person,person),
+                       father(person,person), daughter(person,person), son(person,person),
+                       sister(person,person), brother(person,person), aunt(person,person),
+                       uncle(person,person), niece(person,person), nephew(person,person) ]).
+
+intermediate_predicates([ sibling(person,person), au(person, person) ]).
+
+strata([ [ wife(_,_), husband(_,_), mother(_,_),  father(_,_), daughter(_,_),
+           son(_,_),  sister(_,_),  brother(_,_), aunt(_,_),   uncle(_,_),
+           niece(_,_), nephew(_,_)
+         ],
+         [
+           au(_,_)
+         ],
+         [
+           sibling(_,_)
+         ]
+      ]).
+
+shielded([]).
+
+object_attributes([ person([ gender([male, female]) ]) ]).
+
+object_relations([ married(person,person), parent(person,person) ]).
+
+language_bias([depth_limit(5), use_attr, use_relations, use_theory, use_built_in,
+               relation_tuning(highly_relational)]).
+
+example([   /* positive instances */
+
+/* 25 */
+wife(alice,art), wife(ann,alfred), wife(beatrice,bob), wife(callie,carl),
+wife(christy,carlos), wife(deanna,david), wife(elisa,eric), wife(fannie,fred),
+wife(gail,george), wife(helen,harry), wife(jane,jack), wife(janet,james),
+wife(kari,karl), wife(lorrie,leon), wife(maria,melvin), wife(martha,mark),
+wife(nancy,neil), wife(nonnie,nero), wife(oma,owen), wife(paula,paul),
+wife(prissie,peter), wife(regina,ray), wife(susan,steve), wife(terri,terry),
+wife(wendy,walt),
+
+/* 25 */
+husband(alfred,ann), husband(art,alice), husband(bob,beatrice), husband(carl,callie),
+husband(carlos,christy), husband(david,deanna), husband(eric,elisa), husband(fred,fannie),
+husband(george,gail), husband(harry,helen), husband(jack,jane), husband(james,janet),
+husband(karl,kari), husband(leon,lorrie), husband(mark,martha), husband(melvin,maria),
+husband(neil,nancy), husband(nero,nonnie), husband(owen,oma), husband(paul,paula),
+husband(peter,prissie), husband(ray,regina), husband(steve,susan), husband(terry,terri),
+husband(walt,wendy),
+
+/* 60 */
+mother(alice,f14), mother(alice,m13), mother(alice,m15), mother(ann,david),
+mother(ann,elisa), mother(beatrice,eric), mother(beatrice,fannie), mother(beatrice,gail),
+mother(beatrice,harry), mother(callie,karl), mother(callie,lorrie), mother(callie,mark),
+mother(christy,f26), mother(christy,f28), mother(christy,m27), mother(deanna,jonas),
+mother(deanna,terry), mother(elisa,art), mother(elisa,umo), mother(elisa,wendy),
+mother(fannie,cornelia), mother(fannie,melvin), mother(fannie,nancy), mother(helen,frederick),
+mother(helen,jane), mother(helen,prissie), mother(jane,f23), mother(jane,f25),
+mother(jane,m24), mother(janet,calvin), mother(janet,christy), mother(janet,jack),
+mother(kari,janet), mother(kari,nero), mother(lorrie,oma), mother(lorrie,paul),
+mother(lorrie,rachel), mother(maria,m16), mother(maria,m17), mother(martha,susan),
+mother(nancy,f19), mother(nancy,f20), mother(nancy,m18), mother(nonnie,angela),
+mother(nonnie,ray), mother(oma,f2), mother(oma,m1), mother(paula,m3),
+mother(prissie,f21), mother(prissie,f22), mother(regina,m29), mother(susan,m4),
+mother(susan,m5), mother(susan,m6), mother(susan,m7), mother(terri,f8),
+mother(terri,m10), mother(terri,m9), mother(wendy,f12), mother(wendy,m11),
+
+/* 60 */
+father(alfred,david), father(alfred,elisa), father(art,f14), father(art,m13),
+father(art,m15), father(bob,eric), father(bob,fannie), father(bob,gail),
+father(bob,harry), father(carl,karl), father(carl,lorrie), father(carl,mark),
+father(carlos,f26), father(carlos,f28), father(carlos,m27), father(david,jonas),
+father(david,terry), father(eric,art), father(eric,umo), father(eric,wendy),
+father(fred,cornelia), father(fred,melvin), father(fred,nancy), father(harry,frederick),
+father(harry,jane), father(harry,prissie), father(jack,f23), father(jack,f25),
+father(jack,m24), father(james,calvin), father(james,christy), father(james,jack),
+father(karl,janet), father(karl,nero), father(leon,oma), father(leon,paul),
+father(leon,rachel), father(mark,susan), father(melvin,m16), father(melvin,m17),
+father(neil,f19), father(neil,f20), father(neil,m18), father(nero,angela),
+father(nero,ray), father(owen,f2), father(owen,m1), father(paul,m3),
+father(peter,f21), father(peter,f22), father(ray,m29), father(steve,m4),
+father(steve,m5), father(steve,m6), father(steve,m7), father(terry,f8),
+father(terry,m10), father(terry,m9), father(walt,f12), father(walt,m11),
+
+/* 66 */
+son(art,elisa), son(art,eric), son(calvin,james), son(calvin,janet),
+son(david,alfred), son(david,ann), son(eric,beatrice), son(eric,bob),
+son(frederick,harry), son(frederick,helen), son(harry,beatrice), son(harry,bob),
+son(jack,james), son(jack,janet), son(jonas,david), son(jonas,deanna),
+son(karl,callie), son(karl,carl), son(m1,oma), son(m1,owen),
+son(m10,terri), son(m10,terry), son(m11,walt), son(m11,wendy),
+son(m13,alice), son(m13,art), son(m15,alice), son(m15,art),
+son(m16,maria), son(m16,melvin), son(m17,maria), son(m17,melvin),
+son(m18,nancy), son(m18,neil), son(m24,jack), son(m24,jane),
+son(m27,carlos), son(m27,christy), son(m29,ray), son(m29,regina),
+son(m3,paul), son(m3,paula), son(m4,steve), son(m4,susan),
+son(m5,steve), son(m5,susan), son(m6,steve), son(m6,susan),
+son(m7,steve), son(m7,susan), son(m9,terri), son(m9,terry),
+son(mark,callie), son(mark,carl), son(melvin,fannie), son(melvin,fred),
+son(nero,kari), son(nero,karl), son(paul,leon), son(paul,lorrie),
+son(ray,nero), son(ray,nonnie), son(terry,david), son(terry,deanna),
+son(umo,elisa), son(umo,eric),
+
+/* 54 */
+daughter(angela,nero), daughter(angela,nonnie), daughter(christy,james), daughter(christy,janet),
+daughter(cornelia,fannie), daughter(cornelia,fred), daughter(elisa,alfred), daughter(elisa,ann),
+daughter(f12,walt), daughter(f12,wendy), daughter(f14,alice), daughter(f14,art),
+daughter(f19,nancy), daughter(f19,neil), daughter(f2,oma), daughter(f2,owen),
+daughter(f20,nancy), daughter(f20,neil), daughter(f21,peter), daughter(f21,prissie),
+daughter(f22,peter), daughter(f22,prissie), daughter(f23,jack), daughter(f23,jane),
+daughter(f25,jack), daughter(f25,jane), daughter(f26,carlos), daughter(f26,christy),
+daughter(f28,carlos), daughter(f28,christy), daughter(f8,terri), daughter(f8,terry),
+daughter(fannie,beatrice), daughter(fannie,bob), daughter(gail,beatrice), daughter(gail,bob),
+daughter(jane,harry), daughter(jane,helen), daughter(janet,kari), daughter(janet,karl),
+daughter(lorrie,callie), daughter(lorrie,carl), daughter(nancy,fannie), daughter(nancy,fred),
+daughter(oma,leon), daughter(oma,lorrie), daughter(prissie,harry), daughter(prissie,helen),
+daughter(rachel,leon), daughter(rachel,lorrie), daughter(susan,mark), daughter(susan,martha),
+daughter(wendy,elisa), daughter(wendy,eric),
+
+/* 47 */
+sister(angela,ray), sister(christy,calvin), sister(christy,jack), sister(cornelia,melvin),
+sister(cornelia,nancy), sister(elisa,david), sister(f12,m11), sister(f14,m13),
+sister(f14,m15), sister(f19,f20), sister(f19,m18), sister(f2,m1),
+sister(f20,f19), sister(f20,m18), sister(f21,f22), sister(f22,f21),
+sister(f23,f25), sister(f23,m24), sister(f25,f23), sister(f25,m24),
+sister(f26,f28), sister(f26,m27), sister(f28,f26), sister(f28,m27),
+sister(f8,m10), sister(f8,m9), sister(fannie,eric), sister(fannie,gail),
+sister(fannie,harry), sister(gail,eric), sister(gail,fannie), sister(gail,harry),
+sister(jane,frederick), sister(jane,prissie), sister(janet,nero), sister(lorrie,karl),
+sister(lorrie,mark), sister(nancy,cornelia), sister(nancy,melvin), sister(oma,paul),
+sister(oma,rachel), sister(prissie,frederick), sister(prissie,jane), sister(rachel,oma),
+sister(rachel,paul), sister(wendy,art), sister(wendy,umo),
+
+/* 59 */
+brother(art,umo), brother(art,wendy), brother(calvin,christy), brother(calvin,jack),
+brother(david,elisa), brother(eric,fannie), brother(eric,gail), brother(eric,harry),
+brother(frederick,jane), brother(frederick,prissie), brother(harry,eric), brother(harry,fannie),
+brother(harry,gail), brother(jack,calvin), brother(jack,christy), brother(jonas,terry),
+brother(karl,lorrie), brother(karl,mark), brother(m1,f2), brother(m10,f8),
+brother(m10,m9), brother(m11,f12), brother(m13,f14), brother(m13,m15),
+brother(m15,f14), brother(m15,m13), brother(m16,m17), brother(m17,m16),
+brother(m18,f19), brother(m18,f20), brother(m24,f23), brother(m24,f25),
+brother(m27,f26), brother(m27,f28), brother(m4,m5), brother(m4,m6),
+brother(m4,m7), brother(m5,m4), brother(m5,m6), brother(m5,m7),
+brother(m6,m4), brother(m6,m5), brother(m6,m7), brother(m7,m4),
+brother(m7,m5), brother(m7,m6), brother(m9,f8), brother(m9,m10),
+brother(mark,karl), brother(mark,lorrie), brother(melvin,cornelia), brother(melvin,nancy),
+brother(nero,janet), brother(paul,oma), brother(paul,rachel), brother(ray,angela),
+brother(terry,jonas), brother(umo,art), brother(umo,wendy),
+
+/* 82 */
+aunt(alice,f12), aunt(alice,m11), aunt(angela,m29), aunt(christy,f23),
+aunt(christy,f25), aunt(christy,m24), aunt(cornelia,f19), aunt(cornelia,f20),
+aunt(cornelia,m16), aunt(cornelia,m17), aunt(cornelia,m18), aunt(deanna,art),
+aunt(deanna,umo), aunt(deanna,wendy), aunt(elisa,cornelia), aunt(elisa,frederick),
+aunt(elisa,jane), aunt(elisa,jonas), aunt(elisa,melvin), aunt(elisa,nancy),
+aunt(elisa,prissie), aunt(elisa,terry), aunt(fannie,art), aunt(fannie,frederick),
+aunt(fannie,jane), aunt(fannie,prissie), aunt(fannie,umo), aunt(fannie,wendy),
+aunt(gail,art), aunt(gail,cornelia), aunt(gail,frederick), aunt(gail,jane),
+aunt(gail,melvin), aunt(gail,nancy), aunt(gail,prissie), aunt(gail,umo),
+aunt(gail,wendy), aunt(helen,art), aunt(helen,cornelia), aunt(helen,melvin),
+aunt(helen,nancy), aunt(helen,umo), aunt(helen,wendy), aunt(jane,f21),
+aunt(jane,f22), aunt(jane,f26), aunt(jane,f28), aunt(jane,m27),
+aunt(janet,angela), aunt(janet,ray), aunt(kari,oma), aunt(kari,paul),
+aunt(kari,rachel), aunt(kari,susan), aunt(lorrie,janet), aunt(lorrie,nero),
+aunt(lorrie,susan), aunt(maria,f19), aunt(maria,f20), aunt(maria,m18),
+aunt(martha,janet), aunt(martha,nero), aunt(martha,oma), aunt(martha,paul),
+aunt(martha,rachel), aunt(nancy,m16), aunt(nancy,m17), aunt(nonnie,calvin),
+aunt(nonnie,christy), aunt(nonnie,jack), aunt(oma,m3), aunt(paula,f2),
+aunt(paula,m1), aunt(prissie,f23), aunt(prissie,f25), aunt(prissie,m24),
+aunt(rachel,f2), aunt(rachel,m1), aunt(rachel,m3), aunt(wendy,f14),
+aunt(wendy,m13), aunt(wendy,m15),
+
+/* 92 */
+uncle(art,f12), uncle(art,m11), uncle(calvin,f23), uncle(calvin,f25),
+uncle(calvin,f26), uncle(calvin,f28), uncle(calvin,m24), uncle(calvin,m27),
+uncle(carlos,f23), uncle(carlos,f25), uncle(carlos,m24), uncle(david,art),
+uncle(david,umo), uncle(david,wendy), uncle(eric,cornelia), uncle(eric,frederick),
+uncle(eric,jane), uncle(eric,jonas), uncle(eric,melvin), uncle(eric,nancy),
+uncle(eric,prissie), uncle(eric,terry), uncle(fred,art), uncle(fred,frederick),
+uncle(fred,jane), uncle(fred,prissie), uncle(fred,umo), uncle(fred,wendy),
+uncle(frederick,f21), uncle(frederick,f22), uncle(frederick,f23), uncle(frederick,f25),
+uncle(frederick,m24), uncle(george,art), uncle(george,cornelia), uncle(george,frederick),
+uncle(george,jane), uncle(george,melvin), uncle(george,nancy), uncle(george,prissie),
+uncle(george,umo), uncle(george,wendy), uncle(harry,art), uncle(harry,cornelia),
+uncle(harry,melvin), uncle(harry,nancy), uncle(harry,umo), uncle(harry,wendy),
+uncle(jack,f21), uncle(jack,f22), uncle(jack,f26), uncle(jack,f28),
+uncle(jack,m27), uncle(james,angela), uncle(james,ray), uncle(jonas,f8),
+uncle(jonas,m10), uncle(jonas,m9), uncle(karl,oma), uncle(karl,paul),
+uncle(karl,rachel), uncle(karl,susan), uncle(leon,janet), uncle(leon,nero),
+uncle(leon,susan), uncle(mark,janet), uncle(mark,nero), uncle(mark,oma),
+uncle(mark,paul), uncle(mark,rachel), uncle(melvin,f19), uncle(melvin,f20),
+uncle(melvin,m18), uncle(neil,m16), uncle(neil,m17), uncle(nero,calvin),
+uncle(nero,christy), uncle(nero,jack), uncle(owen,m3), uncle(paul,f2),
+uncle(paul,m1), uncle(peter,f23), uncle(peter,f25), uncle(peter,m24),
+uncle(umo,f12), uncle(umo,f14), uncle(umo,m11), uncle(umo,m13),
+uncle(umo,m15), uncle(walt,f14), uncle(walt,m13), uncle(walt,m15),
+
+/* 82 */
+nephew(art,david), nephew(art,deanna), nephew(art,fannie), nephew(art,fred),
+nephew(art,gail), nephew(art,george), nephew(art,harry), nephew(art,helen),
+nephew(calvin,nero), nephew(calvin,nonnie), nephew(frederick,elisa), nephew(frederick,eric),
+nephew(frederick,fannie), nephew(frederick,fred), nephew(frederick,gail), nephew(frederick,george),
+nephew(jack,nero), nephew(jack,nonnie), nephew(jonas,elisa), nephew(jonas,eric),
+nephew(m1,paul), nephew(m1,paula), nephew(m1,rachel), nephew(m10,jonas),
+nephew(m11,alice), nephew(m11,art), nephew(m11,umo), nephew(m13,umo),
+nephew(m13,walt), nephew(m13,wendy), nephew(m15,umo), nephew(m15,walt),
+nephew(m15,wendy), nephew(m16,cornelia), nephew(m16,nancy), nephew(m16,neil),
+nephew(m17,cornelia), nephew(m17,nancy), nephew(m17,neil), nephew(m18,cornelia),
+nephew(m18,maria), nephew(m18,melvin), nephew(m24,calvin), nephew(m24,carlos),
+nephew(m24,christy), nephew(m24,frederick), nephew(m24,peter), nephew(m24,prissie),
+nephew(m27,calvin), nephew(m27,jack), nephew(m27,jane), nephew(m29,angela),
+nephew(m3,oma), nephew(m3,owen), nephew(m3,rachel), nephew(m9,jonas),
+nephew(melvin,elisa), nephew(melvin,eric), nephew(melvin,gail), nephew(melvin,george),
+nephew(melvin,harry), nephew(melvin,helen), nephew(nero,leon), nephew(nero,lorrie),
+nephew(nero,mark), nephew(nero,martha), nephew(paul,kari), nephew(paul,karl),
+nephew(paul,mark), nephew(paul,martha), nephew(ray,james), nephew(ray,janet),
+nephew(terry,elisa), nephew(terry,eric), nephew(umo,david), nephew(umo,deanna),
+nephew(umo,fannie), nephew(umo,fred), nephew(umo,gail), nephew(umo,george),
+nephew(umo,harry), nephew(umo,helen),
+
+/* 92 */
+niece(angela,james), niece(angela,janet), niece(christy,nero), niece(christy,nonnie),
+niece(cornelia,elisa), niece(cornelia,eric), niece(cornelia,gail), niece(cornelia,george),
+niece(cornelia,harry), niece(cornelia,helen), niece(f12,alice), niece(f12,art),
+niece(f12,umo), niece(f14,umo), niece(f14,walt), niece(f14,wendy),
+niece(f19,cornelia), niece(f19,maria), niece(f19,melvin), niece(f2,paul),
+niece(f2,paula), niece(f2,rachel), niece(f20,cornelia), niece(f20,maria),
+niece(f20,melvin), niece(f21,frederick), niece(f21,jack), niece(f21,jane),
+niece(f22,frederick), niece(f22,jack), niece(f22,jane), niece(f23,calvin),
+niece(f23,carlos), niece(f23,christy), niece(f23,frederick), niece(f23,peter),
+niece(f23,prissie), niece(f25,calvin), niece(f25,carlos), niece(f25,christy),
+niece(f25,frederick), niece(f25,peter), niece(f25,prissie), niece(f26,calvin),
+niece(f26,jack), niece(f26,jane), niece(f28,calvin), niece(f28,jack),
+niece(f28,jane), niece(f8,jonas), niece(jane,elisa), niece(jane,eric),
+niece(jane,fannie), niece(jane,fred), niece(jane,gail), niece(jane,george),
+niece(janet,leon), niece(janet,lorrie), niece(janet,mark), niece(janet,martha),
+niece(nancy,elisa), niece(nancy,eric), niece(nancy,gail), niece(nancy,george),
+niece(nancy,harry), niece(nancy,helen), niece(oma,kari), niece(oma,karl),
+niece(oma,mark), niece(oma,martha), niece(prissie,elisa), niece(prissie,eric),
+niece(prissie,fannie), niece(prissie,fred), niece(prissie,gail), niece(prissie,george),
+niece(rachel,kari), niece(rachel,karl), niece(rachel,mark), niece(rachel,martha),
+niece(susan,kari), niece(susan,karl), niece(susan,leon), niece(susan,lorrie),
+niece(wendy,david), niece(wendy,deanna), niece(wendy,fannie), niece(wendy,fred),
+niece(wendy,gail), niece(wendy,george), niece(wendy,harry), niece(wendy,helen)
+
+],
+[
+wife(bob,susan), wife(steve,bob), wife(bob,f25), wife(m5,prissie),
+wife(steve,ann), wife(f22,f14), wife(m18,m5), wife(oma,wendy),
+wife(f23,jack), wife(fannie,wendy), wife(george,janet), wife(f22,frederick),
+wife(f26,f23), wife(elisa,harry), wife(oma,rachel), wife(angela,m15),
+wife(cornelia,f12), wife(george,m16), wife(walt,m5), wife(art,jack), 
+wife(maria,deanna), wife(m16,m13), wife(angela,bob), wife(terry,neil),
+wife(carlos,terri), wife(lorrie,jane), wife(frederick,calvin), wife(george,prissie),
+wife(janet,harry), wife(eric,terry), wife(m27,f22), wife(nero,m29),
+wife(james,martha), wife(leon,cornelia), wife(prissie,art), wife(m10,paul),
+wife(terri,walt), wife(alice,m17), wife(umo,jonas), wife(carlos,deanna),
+wife(f20,ann), wife(jonas,rachel), wife(peter,eric), wife(f8,m24),
+wife(carl,steve), wife(melvin,m1), wife(cornelia,mark), wife(m24,angela),
+wife(f2,prissie), wife(f8,f25),
+
+husband(kari,david), husband(peter,m3), husband(f2,terri), husband(paul,m6),
+husband(wendy,owen), husband(fred,m6), husband(prissie,helen), husband(m29,owen),
+husband(ann,f20), husband(james,susan), husband(nonnie,carl), husband(m24,art),
+husband(alfred,james), husband(f14,elisa), husband(terri,david), husband(m10,james),
+husband(carlos,jack), husband(lorrie,gail), husband(fred,walt), husband(lorrie,wendy),
+husband(ray,callie), husband(m7,calvin), husband(paula,f12), husband(james,steve),
+husband(f28,f14), husband(walt,lorrie), husband(alice,eric), husband(neil,peter),
+husband(ray,f2), husband(nonnie,peter), husband(james,terry), husband(m18,f23),
+husband(rachel,maria), husband(leon,wendy), husband(m5,m1), husband(gail,m29),
+husband(oma,m10), husband(cornelia,mark), husband(jane,m3), husband(kari,janet),
+husband(m18,m15), husband(art,regina), husband(m7,m15), husband(karl,f22),
+husband(m3,m18), husband(f20,martha), husband(maria,christy), husband(terry,ann),
+husband(carl,christy), husband(m7,m11),
+
+mother(f22,f26), mother(f28,martha), mother(f21,f19), mother(f12,harry),
+mother(mark,eric), mother(nero,owen), mother(maria,cornelia), mother(harry,james),
+mother(m9,f26), mother(gail,rachel), mother(nonnie,eric), mother(bob,m18),
+mother(steve,nonnie), mother(m13,fred), mother(jonas,regina), mother(m27,karl),
+mother(f23,f12), mother(karl,regina), mother(m17,jonas), mother(f2,m16),
+mother(m3,lorrie), mother(leon,janet), mother(f25,prissie), mother(jonas,f20),
+mother(m1,martha), mother(m16,m5), mother(m16,frederick), mother(f28,m29),
+mother(alfred,terri), mother(george,karl), mother(f8,nero), mother(m7,martha),
+mother(carl,lorrie), mother(bob,terri), mother(oma,carl), mother(peter,m15),
+mother(george,m3), mother(m1,m4), mother(harry,f23), mother(m4,f22),
+mother(paula,f20), mother(carlos,jonas), mother(eric,m1), mother(beatrice,deanna),
+mother(m29,eric), mother(eric,helen), mother(umo,m1), mother(christy,jonas),
+mother(jonas,walt), mother(martha,melvin), mother(alice,umo), mother(f21,ray),
+mother(frederick,f14), mother(f12,m1), mother(walt,melvin), mother(paula,paula),
+mother(christy,maria), mother(terry,terry), mother(calvin,m5), mother(f21,paula),
+mother(janet,m29), mother(f8,f19), mother(steve,wendy), mother(f23,m17),
+mother(terri,terri), mother(leon,f12), mother(david,george), mother(paul,deanna),
+mother(ray,alice), mother(mark,f12), mother(peter,f21), mother(paul,frederick),
+mother(james,alice), mother(callie,callie), mother(susan,fred), mother(george,rachel),
+mother(kari,umo), mother(f21,alice), mother(wendy,f26), mother(f20,alfred),
+mother(f12,james), mother(wendy,wendy), mother(m6,prissie), mother(mark,wendy),
+mother(art,m15), mother(karl,george), mother(m29,carlos), mother(david,bob),
+mother(m6,janet), mother(paul,terry), mother(owen,jack), mother(oma,paul),
+mother(m10,bob), mother(alice,kari), mother(carlos,melvin), mother(f8,deanna),
+mother(nancy,jane), mother(m7,prissie), mother(ray,gail), mother(callie,paula),
+mother(alfred,nancy), mother(peter,f26), mother(leon,regina), mother(oma,gail),
+mother(susan,paul), mother(fannie,bob), mother(f23,carl), mother(f23,nero),
+mother(steve,carlos), mother(f25,f25), mother(m4,m13), mother(nonnie,janet),
+mother(m3,mark), mother(david,paula), mother(m5,david), mother(maria,ray),
+mother(m29,m10), mother(harry,f25), mother(regina,gail), mother(f23,susan),
+
+father(frederick,m24), father(owen,regina), father(nancy,m29), father(christy,umo),
+father(m17,helen), father(alice,m16), father(martha,m7), father(cornelia,f14),
+father(janet,f28), father(nero,m9), father(m9,f25), father(ann,mark),
+father(f14,m24), father(f26,m27), father(m27,james), father(f21,m10),
+father(m5,owen), father(m7,steve), father(mark,owen), father(calvin,m18),
+father(m5,f14), father(leon,m7), father(helen,rachel), father(angela,eric),
+father(m18,f20), father(m5,harry), father(melvin,m3), father(m24,angela),
+father(umo,susan), father(bob,david), father(m7,janet), father(janet,m1),
+father(m29,peter), father(f2,maria), father(fred,alfred), father(f19,m16),
+father(rachel,m11), father(peter,melvin), father(jonas,jack), father(elisa,m3),
+father(f25,janet), father(leon,m16), father(cornelia,f2), father(george,f20),
+father(ann,angela), father(m4,karl), father(m3,steve), father(m17,m18),
+father(steve,bob), father(neil,peter), father(m6,regina), father(f25,f21),
+father(eric,janet), father(f21,jonas), father(f21,carlos), father(m3,harry),
+father(nancy,angela), father(melvin,m27), father(m6,neil), father(m15,elisa),
+father(helen,beatrice), father(maria,prissie), father(paul,peter), father(christy,ann),
+father(paula,mark), father(f19,jack), father(regina,m4), father(m29,jack),
+father(eric,m3), father(janet,f20), father(christy,george), father(bob,m29),
+father(m27,m24), father(walt,ray), father(leon,f28), father(jack,m3),
+father(umo,m9), father(steve,alice), father(fannie,m15), father(george,owen),
+father(jane,m13), father(m15,umo), father(melvin,f8), father(angela,terri),
+father(alfred,prissie), father(mark,umo), father(f28,m11), father(rachel,jane),
+father(f20,m18), father(martha,m10), father(f28,david), father(m10,m9),
+father(elisa,nancy), father(alfred,m15), father(f19,karl), father(umo,m15),
+father(f28,elisa), father(walt,fannie), father(m18,angela), father(frederick,james),
+father(f22,gail), father(owen,m10), father(ann,f2), father(f22,kari),
+father(jonas,james), father(harry,m6), father(ann,jack), father(m17,eric),
+father(janet,gail), father(f21,jane), father(m18,carlos), father(m16,m24),
+father(umo,m24), father(paula,m10), father(lorrie,f28), father(jane,m4),
+father(nero,jack), father(f22,deanna), father(calvin,fannie), father(nonnie,art),
+
+son(f2,oma), son(wendy,steve), son(gail,frederick), son(regina,m6),
+son(lorrie,m27), son(christy,angela), son(f22,beatrice), son(harry,ray),
+son(jack,regina), son(m3,nancy), son(alice,paula), son(m16,f25),
+son(helen,art), son(wendy,neil), son(eric,eric), son(regina,cornelia),
+son(leon,calvin), son(nonnie,terri), son(mark,f14), son(jack,gail),
+son(m3,m17), son(ray,lorrie), son(art,f21), son(m13,m29),
+son(martha,mark), son(george,m3), son(paula,m3), son(umo,martha),
+son(cornelia,f25), son(karl,ann), son(jonas,jane), son(f19,m1),
+son(jane,karl), son(paul,prissie), son(harry,peter), son(m5,elisa),
+son(george,prissie), son(regina,owen), son(m6,nero), son(martha,f19),
+son(m9,helen), son(leon,m15), son(david,f25), son(f23,m27),
+son(fred,m4), son(angela,art), son(m11,jack), son(alfred,angela),
+son(regina,jonas), son(f19,fred), son(terry,christy), son(alfred,janet),
+son(maria,neil), son(f23,ray), son(harry,paul), son(f19,peter),
+son(art,angela), son(m15,cornelia), son(jane,carl), son(prissie,eric),
+son(m7,m27), son(neil,walt), son(m27,m6), son(f26,f19),
+son(carl,paula), son(terri,frederick), son(deanna,elisa), son(helen,eric),
+son(deanna,eric), son(ann,calvin), son(cornelia,janet), son(f26,m16),
+son(alice,helen), son(fannie,helen), son(deanna,maria), son(wendy,m13),
+son(alice,m4), son(f12,fred), son(susan,prissie), son(m18,m24),
+son(m7,melvin), son(walt,m16), son(ray,f12), son(m15,m9),
+son(eric,janet), son(carlos,karl), son(nancy,m29), son(paul,m9),
+son(neil,fred), son(umo,beatrice), son(wendy,terri), son(jack,oma),
+son(jack,m15), son(melvin,walt), son(m27,jonas), son(christy,paula),
+son(m3,m6), son(rachel,walt), son(f12,mark), son(carlos,owen),
+son(m13,fred), son(elisa,alfred), son(m24,terry), son(bob,paul),
+son(lorrie,f25), son(george,maria), son(f2,jack), son(frederick,alice),
+son(ray,ann), son(m5,janet), son(christy,f2), son(gail,melvin),
+son(f28,m6), son(peter,susan), son(paula,david), son(f12,beatrice),
+son(kari,m11), son(cornelia,george), son(carl,paul), son(m18,m27),
+son(peter,nero), son(m1,art), son(rachel,eric), son(jonas,m29),
+son(m29,f22), son(f2,bob), son(owen,m29), son(martha,alfred),
+son(terry,gail), son(f22,m4), son(f14,m17), son(f21,f20),
+
+daughter(harry,m11), daughter(paula,ann), daughter(m27,kari), daughter(carl,f25),
+daughter(terry,paul), daughter(beatrice,susan), daughter(wendy,nonnie), daughter(christy,ann),
+daughter(rachel,f2), daughter(m10,susan), daughter(elisa,f12), daughter(m10,mark),
+daughter(paul,bob), daughter(m10,terry), daughter(steve,karl), daughter(fred,m1),
+daughter(m10,karl), daughter(m17,cornelia), daughter(f28,fannie), daughter(christy,jane),
+daughter(jack,lorrie), daughter(harry,janet), daughter(ray,jonas), daughter(f2,carlos),
+daughter(fannie,m24), daughter(f28,f28), daughter(m1,nonnie), daughter(steve,cornelia),
+daughter(george,mark), daughter(martha,m7), daughter(umo,m16), daughter(m27,jack),
+daughter(helen,f20), daughter(m24,f8), daughter(m13,carl), daughter(alice,f20),
+daughter(ann,deanna), daughter(christy,m11), daughter(peter,f22), daughter(susan,owen),
+daughter(m7,oma), daughter(m24,m7), daughter(george,beatrice), daughter(nero,steve),
+daughter(m16,f2), daughter(alfred,f12), daughter(m4,m18), daughter(george,eric),
+daughter(leon,ann), daughter(f12,f25), daughter(alice,m7), daughter(ray,m27),
+daughter(terri,oma), daughter(george,bob), daughter(f8,f22), daughter(regina,m17),
+daughter(terri,frederick), daughter(nonnie,f21), daughter(harry,m5), daughter(susan,jonas),
+daughter(susan,m6), daughter(alice,f14), daughter(f20,m29), daughter(m7,peter),
+daughter(angela,carlos), daughter(m9,christy), daughter(alfred,christy), daughter(mark,m24),
+daughter(f14,jack), daughter(george,m29), daughter(melvin,f23), daughter(fred,peter),
+daughter(leon,wendy), daughter(cornelia,kari), daughter(m10,james), daughter(harry,umo),
+daughter(peter,jack), daughter(maria,f28), daughter(m17,terry), daughter(beatrice,f12),
+daughter(janet,harry), daughter(nancy,alice), daughter(f22,mark), daughter(carlos,alice),
+daughter(m24,steve), daughter(m24,m1), daughter(umo,m10), daughter(paul,f19),
+daughter(carl,f28), daughter(neil,david), daughter(jane,f19), daughter(f12,alice),
+daughter(m10,terri), daughter(beatrice,alice), daughter(f8,m15), daughter(kari,george),
+daughter(karl,carl), daughter(m5,cornelia), daughter(frederick,carl), daughter(m6,callie),
+daughter(m29,m13), daughter(f25,m15), daughter(paul,paul), daughter(angela,m1),
+daughter(f12,steve), daughter(oma,f14), daughter(ray,mark), daughter(cornelia,walt),
+
+sister(martha,karl), sister(calvin,christy), sister(leon,f19), sister(steve,prissie),
+sister(m13,carlos), sister(f23,susan), sister(bob,maria), sister(ray,eric),
+sister(fannie,nonnie), sister(jane,m17), sister(paul,m10), sister(jane,m18),
+sister(james,oma), sister(m11,m15), sister(peter,helen), sister(susan,nero),
+sister(lorrie,m15), sister(m5,f20), sister(steve,alfred), sister(maria,nero),
+sister(fannie,frederick), sister(m13,cornelia), sister(fred,f12), sister(carlos,nonnie),
+sister(david,prissie), sister(f28,walt), sister(m13,kari), sister(alfred,lorrie),
+sister(janet,alice), sister(jonas,jack), sister(alfred,art), sister(m4,callie),
+sister(neil,m3), sister(deanna,alfred), sister(mark,wendy), sister(m17,f12),
+sister(m17,george), sister(janet,lorrie), sister(callie,calvin), sister(angela,umo),
+sister(wendy,carl), sister(ann,m15), sister(kari,m24), sister(neil,art),
+sister(callie,fred), sister(regina,m11), sister(terry,leon), sister(fred,elisa),
+sister(neil,carlos), sister(f25,prissie), sister(rachel,cornelia), sister(deanna,beatrice),
+sister(alfred,deanna), sister(terri,karl), sister(art,christy), sister(m9,steve),
+sister(lorrie,jane), sister(kari,janet), sister(f23,lorrie), sister(m27,nero),
+sister(christy,umo), sister(ann,m3), sister(m9,m13), sister(m9,f19),
+sister(m7,melvin), sister(deanna,f20), sister(christy,nonnie), sister(regina,m27),
+sister(f26,terri), sister(paula,nero), sister(leon,walt), sister(f12,f21),
+sister(elisa,helen), sister(jonas,leon), sister(nancy,deanna), sister(janet,m11),
+sister(f22,f20), sister(f12,paula), sister(alice,paula), sister(umo,f12),
+sister(paula,james), sister(bob,bob), sister(bob,alice), sister(christy,m4),
+sister(susan,frederick), sister(eric,f8), sister(christy,f25), sister(m13,rachel),
+sister(prissie,fred), sister(f8,m29), sister(susan,peter), sister(paula,m27),
+sister(jack,m17), sister(steve,oma),
+
+brother(m1,f12), brother(f21,m16), brother(f12,angela), brother(oma,frederick),
+brother(terri,oma), brother(f12,bob), brother(wendy,f12), brother(angela,f14),
+brother(jonas,paula), brother(fannie,ann), brother(beatrice,m29), brother(f21,fannie),
+brother(neil,f21), brother(rachel,regina), brother(bob,leon), brother(f20,nero),
+brother(leon,eric), brother(f21,m10), brother(m6,regina), brother(harry,f21),
+brother(oma,kari), brother(martha,terry), brother(elisa,james), brother(jane,fannie),
+brother(paula,f19), brother(martha,m13), brother(carlos,f2), brother(neil,martha),
+brother(helen,wendy), brother(m3,m3), brother(ann,umo), brother(m13,m13),
+brother(m16,terri), brother(bob,regina), brother(f23,christy), brother(m13,eric),
+brother(jack,m15), brother(peter,neil), brother(beatrice,m7), brother(m13,james),
+brother(kari,callie), brother(rachel,m11), brother(christy,christy), brother(rachel,paula),
+brother(f22,paul), brother(jack,susan), brother(m1,m11), brother(callie,f14),
+brother(walt,regina), brother(terry,nonnie), brother(susan,calvin), brother(leon,f19),
+brother(jane,peter), brother(m6,umo), brother(jane,kari), brother(m27,f20),
+brother(f21,martha), brother(nero,f20), brother(eric,nonnie), brother(f2,calvin),
+brother(f26,m24), brother(jack,m10), brother(karl,m11), brother(janet,m15),
+brother(f20,m5), brother(m4,paul), brother(alfred,alice), brother(f21,frederick),
+brother(f19,jane), brother(james,f25), brother(prissie,f22), brother(f22,nero),
+brother(terry,melvin), brother(gail,nero), brother(m6,terri), brother(m13,owen),
+brother(f25,m27), brother(harry,carlos), brother(leon,paul), brother(steve,alfred),
+brother(f20,m16), brother(carl,owen), brother(regina,f22), brother(m24,m1),
+brother(fannie,walt), brother(david,walt), brother(m24,neil), brother(paul,bob),
+brother(nonnie,walt), brother(jonas,ann), brother(nancy,wendy), brother(nancy,jonas),
+brother(m1,f23), brother(f23,m4), brother(jonas,m9), brother(paul,f22),
+brother(terry,nancy), brother(callie,deanna), brother(m27,steve), brother(callie,f21),
+brother(eric,george), brother(elisa,m18), brother(m7,m29), brother(harry,karl),
+brother(janet,f28), brother(christy,fannie), brother(james,alfred), brother(alfred,terri),
+brother(m7,walt), brother(gail,f8), brother(m11,nero), brother(f2,regina),
+brother(f23,rachel), brother(f25,m29), brother(m24,leon), brother(eric,jonas),
+brother(paul,nonnie), brother(m3,carl),
+
+aunt(peter,f8), aunt(harry,lorrie), aunt(terri,helen), aunt(callie,walt),
+aunt(m18,walt), aunt(f22,f25), aunt(fannie,fannie), aunt(m13,steve),
+aunt(f21,f12), aunt(bob,oma), aunt(m13,calvin), aunt(m1,steve),
+aunt(terry,carlos), aunt(jane,james), aunt(m4,david), aunt(ann,nancy),
+aunt(jane,helen), aunt(m17,lorrie), aunt(jane,carl), aunt(fred,elisa),
+aunt(f20,jonas), aunt(janet,m18), aunt(rachel,fannie), aunt(f20,f21),
+aunt(wendy,james), aunt(david,eric), aunt(m7,james), aunt(f8,nero),
+aunt(maria,m6), aunt(wendy,peter), aunt(calvin,janet), aunt(carlos,neil),
+aunt(umo,paul), aunt(m10,walt), aunt(paula,m5), aunt(rachel,f28),
+aunt(nonnie,deanna), aunt(steve,callie), aunt(f19,carl), aunt(jack,jack),
+aunt(f14,m6), aunt(f20,peter), aunt(frederick,alfred), aunt(callie,f26),
+aunt(alfred,david), aunt(m7,neil), aunt(eric,carlos), aunt(christy,f2),
+aunt(m4,deanna), aunt(m7,bob), aunt(wendy,m27), aunt(nancy,m10),
+aunt(f12,george), aunt(terri,nancy), aunt(susan,carlos), aunt(jack,m4),
+aunt(beatrice,m4), aunt(neil,peter), aunt(f25,terry), aunt(cornelia,m7),
+aunt(nonnie,elisa), aunt(m1,f25), aunt(regina,cornelia), aunt(karl,f20),
+aunt(f12,eric), aunt(melvin,martha), aunt(art,steve), aunt(nancy,f25),
+aunt(owen,carl), aunt(art,m4), aunt(janet,calvin), aunt(janet,martha),
+aunt(karl,wendy), aunt(f26,christy), aunt(f23,angela), aunt(calvin,m1),
+aunt(alice,m24), aunt(f2,cornelia), aunt(m13,kari), aunt(harry,f26),
+aunt(f8,james), aunt(m29,helen), aunt(angela,fred), aunt(melvin,m27),
+aunt(walt,f23), aunt(janet,m16), aunt(m5,art), aunt(leon,f8),
+aunt(susan,prissie), aunt(peter,peter), aunt(m3,leon), aunt(mark,m10),
+aunt(m18,christy), aunt(maria,martha), aunt(ray,terry), aunt(george,janet),
+aunt(melvin,ann), aunt(steve,ray), aunt(calvin,deanna), aunt(martha,alfred),
+aunt(karl,leon), aunt(m17,m7), aunt(james,m29), aunt(f25,f28),
+aunt(harry,nero), aunt(f25,ann), aunt(m17,m24), aunt(f20,m16),
+aunt(susan,steve), aunt(janet,carlos), aunt(nonnie,melvin), aunt(prissie,peter),
+aunt(frederick,f26), aunt(rachel,nonnie), aunt(walt,george), aunt(peter,f19),
+aunt(regina,janet), aunt(eric,kari), aunt(elisa,harry), aunt(m10,james),
+aunt(m24,carl), aunt(callie,nonnie), aunt(alice,martha), aunt(angela,janet),
+aunt(f19,m9), aunt(helen,f20), aunt(paul,f12), aunt(susan,nancy),
+aunt(m7,m6), aunt(m3,oma), aunt(steve,f2), aunt(nonnie,carlos),
+aunt(melvin,m15), aunt(neil,art), aunt(christy,f21), aunt(wendy,kari),
+aunt(deanna,f21), aunt(m15,angela), aunt(leon,m16), aunt(nonnie,ray),
+aunt(art,melvin), aunt(art,gail), aunt(m16,jonas), aunt(carlos,terry),
+aunt(regina,jack), aunt(m9,m7), aunt(f22,f21), aunt(fred,ray),
+aunt(regina,bob), aunt(calvin,eric), aunt(wendy,art), aunt(karl,f21),
+aunt(calvin,art), aunt(f22,ann), aunt(nonnie,m10), aunt(m17,f20),
+aunt(f19,f25), aunt(maria,carlos), aunt(elisa,ann), aunt(carl,terri),
+aunt(walt,lorrie), aunt(steve,m18), aunt(f20,harry), aunt(f21,m10),
+
+uncle(frederick,f28), uncle(walt,jane), uncle(f14,oma), uncle(f22,m7),
+uncle(umo,melvin), uncle(cornelia,f2), uncle(nancy,f20), uncle(f19,nero),
+uncle(paula,mark), uncle(f2,m16), uncle(m6,nonnie), uncle(jonas,umo),
+uncle(ann,nancy), uncle(george,f2), uncle(jane,f8), uncle(george,f19),
+uncle(f19,susan), uncle(gail,f19), uncle(alice,martha), uncle(m29,m10),
+uncle(m9,bob), uncle(alfred,m9), uncle(nero,lorrie), uncle(fred,terry),
+uncle(callie,art), uncle(m7,m15), uncle(regina,f28), uncle(melvin,neil),
+uncle(david,owen), uncle(m11,leon), uncle(nancy,eric), uncle(fred,m9),
+uncle(m17,m27), uncle(terry,owen), uncle(nonnie,m9), uncle(calvin,f22),
+uncle(f19,f22), uncle(f14,christy), uncle(david,paul), uncle(m15,deanna),
+uncle(callie,karl), uncle(callie,rachel), uncle(f20,prissie), uncle(christy,f19),
+uncle(f12,m9), uncle(harry,m10), uncle(fannie,david), uncle(nero,maria),
+uncle(melvin,m3), uncle(jack,kari), uncle(cornelia,regina), uncle(m10,f25),
+uncle(jonas,alfred), uncle(f28,terri), uncle(m18,m29), uncle(carl,jonas),
+uncle(ray,paula), uncle(fred,m5), uncle(art,fred), uncle(alice,m1),
+uncle(m16,regina), uncle(walt,m5), uncle(alice,deanna), uncle(angela,m17),
+uncle(f21,terri), uncle(m11,m13), uncle(alice,ray), uncle(maria,cornelia),
+uncle(rachel,martha), uncle(fred,m15), uncle(eric,mark), uncle(f12,fred),
+uncle(f19,melvin), uncle(alice,ann), uncle(calvin,m29), uncle(christy,terri),
+uncle(lorrie,m17), uncle(m3,m3), uncle(beatrice,cornelia), uncle(george,carlos),
+uncle(neil,beatrice), uncle(calvin,elisa), uncle(beatrice,f28), uncle(bob,terri),
+uncle(jack,m16), uncle(f25,elisa), uncle(m13,steve), uncle(f23,carlos),
+uncle(eric,f20), uncle(art,neil), uncle(jack,carl), uncle(f19,walt),
+uncle(f25,ann), uncle(prissie,jonas), uncle(paul,f28), uncle(nonnie,carl),
+uncle(prissie,m18), uncle(umo,peter), uncle(kari,jane), uncle(f12,f23),
+uncle(eric,m18), uncle(walt,david), uncle(christy,beatrice), uncle(james,m27),
+uncle(deanna,karl), uncle(lorrie,paul), uncle(m5,f2), uncle(prissie,carlos),
+uncle(calvin,nancy), uncle(calvin,m11), uncle(martha,f12), uncle(helen,cornelia),
+uncle(nancy,david), uncle(m29,regina), uncle(nancy,m3), uncle(m29,m27),
+uncle(m7,fannie), uncle(umo,susan), uncle(m15,ray), uncle(steve,calvin),
+uncle(m24,alfred), uncle(alfred,carlos), uncle(m11,f28), uncle(steve,paula),
+uncle(bob,m7), uncle(f8,helen), uncle(elisa,wendy), uncle(m29,cornelia),
+uncle(terri,fannie), uncle(regina,owen), uncle(paul,f25), uncle(m7,martha),
+uncle(calvin,m9), uncle(gail,carl), uncle(m3,jane), uncle(f23,george),
+uncle(regina,susan), uncle(mark,paula), uncle(m24,m10), uncle(f19,m29),
+uncle(owen,f23), uncle(m11,carl), uncle(wendy,f19), uncle(jonas,walt),
+uncle(terry,george), uncle(art,gail), uncle(f26,f2), uncle(m10,christy),
+uncle(jane,m5), uncle(f20,m15), uncle(f21,christy), uncle(helen,f2),
+uncle(m4,beatrice), uncle(art,oma), uncle(f23,karl), uncle(leon,mark),
+uncle(susan,ann), uncle(maria,f21), uncle(terri,m18), uncle(janet,jonas),
+uncle(carlos,m4), uncle(kari,f19), uncle(f22,steve), uncle(jack,calvin),
+uncle(rachel,neil), uncle(cornelia,jack), uncle(f20,harry), uncle(oma,f8),
+uncle(f19,f8), uncle(george,m29), uncle(nancy,james), uncle(kari,harry),
+uncle(eric,fred), uncle(f23,alfred), uncle(lorrie,deanna), uncle(regina,leon),
+uncle(owen,deanna), uncle(ray,peter), uncle(f28,christy), uncle(jack,steve),
+uncle(f23,janet), uncle(m10,ann), uncle(f21,m15), uncle(kari,nonnie),
+
+nephew(george,susan), nephew(peter,m10), nephew(f19,beatrice), nephew(lorrie,m24),
+nephew(ann,m5), nephew(elisa,melvin), nephew(callie,alfred), nephew(george,calvin),
+nephew(helen,paul), nephew(harry,alice), nephew(m16,fannie), nephew(terry,christy),
+nephew(terri,m29), nephew(harry,f12), nephew(ray,paula), nephew(m17,harry),
+nephew(elisa,m24), nephew(ann,f21), nephew(callie,f28), nephew(melvin,fannie),
+nephew(m29,calvin), nephew(angela,peter), nephew(m15,melvin), nephew(m5,fred),
+nephew(steve,m11), nephew(m16,m27), nephew(f12,alice), nephew(terri,m6),
+nephew(m13,george), nephew(m24,lorrie), nephew(peter,cornelia), nephew(jack,f20),
+nephew(carlos,f22), nephew(frederick,paula), nephew(f28,jack), nephew(m4,christy),
+nephew(cornelia,callie), nephew(beatrice,susan), nephew(f28,umo), nephew(janet,art),
+nephew(leon,jane), nephew(susan,f19), nephew(deanna,m13), nephew(f19,ray),
+nephew(jack,owen), nephew(james,ray), nephew(rachel,f22), nephew(f12,terri),
+nephew(f25,f25), nephew(m3,karl), nephew(m6,terry), nephew(elisa,f23),
+nephew(carlos,m1), nephew(paula,mark), nephew(m27,m13), nephew(f8,m6),
+nephew(bob,harry), nephew(bob,cornelia), nephew(f14,nero), nephew(f19,cornelia),
+nephew(terry,f2), nephew(nancy,jack), nephew(m29,walt), nephew(angela,carl),
+nephew(gail,mark), nephew(owen,m17), nephew(prissie,david), nephew(f26,f20),
+nephew(m11,m13), nephew(m10,nero), nephew(oma,m10), nephew(m15,paula),
+nephew(alice,paula), nephew(art,m17), nephew(fred,steve), nephew(carlos,cornelia),
+nephew(m5,nero), nephew(m7,deanna), nephew(calvin,m13), nephew(lorrie,m1),
+nephew(ann,frederick), nephew(nancy,mark), nephew(lorrie,f19), nephew(alfred,m11),
+nephew(wendy,maria), nephew(m9,m1), nephew(eric,carlos), nephew(f14,f28),
+nephew(m17,nero), nephew(carlos,prissie), nephew(f12,christy), nephew(calvin,elisa),
+nephew(walt,paul), nephew(helen,nonnie), nephew(f21,beatrice), nephew(frederick,mark),
+nephew(f12,owen), nephew(david,peter), nephew(m17,helen), nephew(leon,george),
+nephew(m11,m16), nephew(carl,beatrice), nephew(m6,carlos), nephew(prissie,jack),
+nephew(beatrice,kari), nephew(oma,umo), nephew(alice,fred), nephew(walt,m15),
+nephew(jack,m11), nephew(kari,jane), nephew(cornelia,frederick), nephew(f28,paul),
+nephew(f8,f20), nephew(neil,helen), nephew(fannie,helen), nephew(f26,nero),
+nephew(jane,cornelia), nephew(alice,f26), nephew(harry,ray), nephew(alice,f14),
+nephew(gail,m4), nephew(f23,lorrie), nephew(m16,elisa), nephew(david,elisa),
+nephew(jonas,maria), nephew(f26,jonas), nephew(m10,owen), nephew(harry,peter),
+nephew(ann,david), nephew(ann,eric), nephew(david,m1), nephew(wendy,m1),
+nephew(m7,elisa), nephew(carl,cornelia), nephew(beatrice,f20), nephew(fannie,m3),
+nephew(christy,harry), nephew(jane,nero), nephew(regina,f26), nephew(f25,m1),
+nephew(gail,beatrice), nephew(paula,lorrie), nephew(jack,harry), nephew(m27,f14),
+nephew(f2,m24), nephew(art,f28), nephew(m18,m24), nephew(f23,nancy),
+nephew(f2,frederick), nephew(f21,cornelia), nephew(m6,james), nephew(david,james),
+nephew(callie,f22), nephew(m7,nonnie), nephew(alice,james), nephew(paul,melvin),
+nephew(fannie,f25), nephew(m29,melvin), nephew(george,terri), nephew(deanna,steve),
+nephew(melvin,beatrice), nephew(m24,rachel), nephew(m24,f20), nephew(f26,f19),
+
+niece(kari,m29), niece(gail,m16), niece(m6,walt), niece(m7,f8),
+niece(m24,walt), niece(m9,m27), niece(f23,f23), niece(terri,gail),
+niece(jane,m5), niece(m3,jack), niece(m18,james), niece(m11,oma),
+niece(oma,m18), niece(christy,m24), niece(terri,regina), niece(f8,f8),
+niece(martha,harry), niece(kari,helen), niece(steve,steve), niece(f8,ann),
+niece(mark,m3), niece(m13,ray), niece(alice,m5), niece(f28,david),
+niece(f8,paul), niece(jack,terri), niece(wendy,alfred), niece(f8,eric),
+niece(james,prissie), niece(m1,m9), niece(m9,carl), niece(gail,peter),
+niece(eric,m1), niece(m5,susan), niece(calvin,terri), niece(maria,paula),
+niece(beatrice,m7), niece(nancy,paula), niece(regina,m16), niece(leon,nonnie),
+niece(prissie,paul), niece(cornelia,m18), niece(f8,cornelia), niece(kari,owen),
+niece(mark,jane), niece(paula,m10), niece(regina,m24), niece(carl,george),
+niece(melvin,wendy), niece(neil,f21), niece(f26,m5), niece(f14,peter),
+niece(neil,regina), niece(cornelia,nero), niece(m1,peter), niece(deanna,jack),
+niece(jane,karl), niece(wendy,m15), niece(walt,frederick), niece(kari,george),
+niece(melvin,jonas), niece(m10,m16), niece(terri,kari), niece(susan,frederick),
+niece(terri,neil), niece(walt,alfred), niece(paula,f12), niece(susan,george),
+niece(m18,george), niece(m18,paula), niece(terry,paula), niece(ann,f25),
+niece(umo,f26), niece(m16,oma), niece(janet,jane), niece(f12,callie),
+niece(jonas,ann), niece(gail,maria), niece(kari,mark), niece(frederick,melvin),
+niece(harry,deanna), niece(owen,f25), niece(m27,jonas), niece(regina,f25),
+niece(f21,f22), niece(regina,f21), niece(mark,neil), niece(calvin,ray),
+niece(rachel,art), niece(angela,m5), niece(prissie,m15), niece(m9,f12),
+niece(m3,prissie), niece(f14,jack), niece(f23,bob), niece(alice,umo),
+niece(prissie,beatrice), niece(prissie,m18), niece(susan,ann), niece(steve,f14),
+niece(f22,fannie), niece(art,terry), niece(m3,regina), niece(f28,m24),
+niece(m6,paul), niece(paula,alfred), niece(karl,gail), niece(m27,f22),
+niece(f28,christy), niece(steve,regina), niece(rachel,f22), niece(jane,christy),
+niece(carlos,eric), niece(terri,paula), niece(nero,eric), niece(m17,alfred),
+niece(f22,james), niece(m24,rachel), niece(christy,ann), niece(peter,maria),
+niece(m15,karl), niece(fannie,steve), niece(paula,m18), niece(lorrie,nonnie),
+niece(rachel,paul), niece(f20,jonas), niece(f25,gail), niece(jack,m17),
+niece(karl,karl), niece(m18,ray), niece(angela,paul), niece(m9,eric),
+niece(frederick,jane), niece(f8,m7), niece(terri,art), niece(lorrie,wendy),
+niece(maria,m1), niece(m24,terry), niece(walt,nero), niece(helen,susan),
+niece(f20,deanna), niece(walt,oma), niece(terry,angela), niece(umo,jonas),
+niece(m11,carlos), niece(f22,f25), niece(frederick,wendy), niece(terry,m4),
+niece(f23,walt), niece(fannie,m3), niece(eric,eric), niece(karl,angela),
+niece(regina,m11), niece(wendy,f8), niece(m9,regina), niece(f2,kari),
+niece(frederick,m1), niece(karl,jack), niece(david,leon), niece(karl,calvin),
+niece(f20,umo), niece(gail,carlos), niece(m27,m16), niece(alice,fannie),
+niece(janet,f26), niece(f23,f26), niece(f19,m15), niece(mark,f20),
+niece(f19,m24), niece(helen,callie), niece(f22,ann), niece(m15,angela),
+niece(f2,alfred), niece(f12,paul), niece(carlos,jack), niece(neil,peter),
+niece(jonas,david), niece(lorrie,f26), niece(m11,james), niece(f19,jack),
+niece(beatrice,regina), niece(fred,frederick), niece(alice,beatrice), niece(melvin,callie)
+
+
+],
+
+  [ person([ [alfred, male],     [ann, female],      [bob, male],        [beatrice, female],
+             [deanna, female],   [david, male],      [elisa, female],    [eric, male],
+             [fannie, female],   [fred, male],       [james, male],      [terry, male],
+             [terri, female],    [umo, male],        [wendy, female],    [walt, male],
+             [art, male],        [alice, female],    [cornelia, female], [melvin, male],
+             [maria, female],    [f8, female],       [m9, male],         [m10, male],
+             [m11, male],        [f12, female],      [m13, male],        [f14, female],
+             [m15, male],        [m16, male],        [m17, male],        [carl, male],
+             [gail, female],     [george, male],     [harry, male],      [helen, female],
+             [janet, female],    [kari, female],     [karl, male],       [nero, male],
+             [nonnie, female],   [nancy, female],    [neil, male],       [peter, male],
+             [prissie, female],  [frederick, male],  [jane, female],     [jack, male],
+             [calvin, male],     [christy, female],  [carlos, male],     [angela, female],
+             [regina, female],   [m18, male],        [f19, female],      [f20, female],
+             [f21, female],      [f22, female],      [f23, female],      [m24, male],
+             [f25, female],      [f26, female],      [m27, male],        [f28, female],
+             [m29, male],        [callie, female],   [lorrie, female],   [leon, male],
+             [mark, male],       [martha, female],   [oma, female],      [owen, male],
+             [paul, male],       [paula, female],    [rachel, female],   [susan, female],
+             [steve, male],      [m1, male],         [f2, female],       [m3, male],
+             [m4, male],         [m5, male],         [m6, male],         [m7, male],
+             [ray, male],        [jonas, male]
+          ])
+  ],
+  facts([ parent(ann, david),       parent(ann, elisa),       parent(beatrice, eric),
+          parent(beatrice, fannie), parent(beatrice, gail),   parent(beatrice, harry),
+          parent(callie, karl),     parent(callie, lorrie),   parent(callie, mark),
+          parent(kari, janet),      parent(kari, nero),       parent(lorrie, oma),
+          parent(lorrie, paul),     parent(lorrie, rachel),   parent(martha, susan),
+          parent(deanna, jonas),    parent(deanna, terry),    parent(elisa, umo),
+          parent(elisa, wendy),     parent(elisa, art),       parent(fannie, cornelia),
+          parent(fannie, melvin),   parent(fannie, nancy),    parent(helen, prissie),
+          parent(helen, jane),      parent(janet, jack),      parent(janet, calvin),
+          parent(janet, christy),   parent(nonnie, angela),   parent(nonnie, ray),
+          parent(terri, f8),        parent(terri, m9),        parent(terri, m10),
+          parent(wendy, m11),       parent(wendy, f12),       parent(alice, m13),
+          parent(alice, f14),       parent(alice, m15),       parent(maria, m16),
+          parent(maria, m17),       parent(nancy, m18),       parent(nancy, f19),
+          parent(nancy, f20),       parent(prissie, f21),     parent(prissie, f22),
+          parent(jane, f23),        parent(jane, m24),        parent(jane, f25),
+          parent(christy, f26),     parent(christy, m27),     parent(christy, f28),
+          parent(regina, m29),      parent(oma, m1),          parent(oma, f2),
+          parent(paula, m3),        parent(susan, m4),        parent(susan, m5),
+          parent(susan, m6),        parent(susan, m7),        parent(helen, frederick),
+
+          parent(alfred, david),    parent(alfred, elisa),    parent(bob, eric),
+          parent(bob, fannie),      parent(bob, gail),        parent(bob, harry),
+          parent(carl, karl),       parent(carl, lorrie),     parent(carl, mark),
+          parent(karl, janet),      parent(karl, nero),       parent(leon, oma),
+          parent(leon, paul),       parent(leon, rachel),     parent(mark, susan),
+          parent(david, jonas),     parent(david, terry),     parent(eric, umo),
+          parent(eric, wendy),      parent(eric, art),        parent(fred, cornelia),
+          parent(fred, melvin),     parent(fred, nancy),      parent(harry, prissie),
+          parent(harry, jane),      parent(james, jack),      parent(james, calvin),
+          parent(james, christy),   parent(nero, angela),     parent(nero, ray),
+          parent(terry, f8),        parent(terry, m9),        parent(terry, m10),
+          parent(walt, m11),        parent(walt, f12),        parent(art, m13),
+          parent(art, f14),         parent(art, m15),         parent(melvin, m16),
+          parent(melvin, m17),      parent(neil, m18),        parent(neil, f19),
+          parent(neil, f20),        parent(peter, f21),       parent(peter, f22),
+          parent(jack, f23),        parent(jack, m24),        parent(jack, f25),
+          parent(carlos, f26),      parent(carlos, m27),      parent(carlos, f28),
+          parent(ray, m29),         parent(owen, m1),         parent(owen, f2),
+          parent(paul, m3),         parent(steve, m4),        parent(steve, m5),
+          parent(steve, m6),        parent(steve, m7),        parent(harry, frederick),
+
+          married(ann, alfred),     married(beatrice, bob),   married(callie, carl),
+          married(deanna, david),   married(elisa, eric),     married(fannie, fred),
+          married(gail, george),    married(helen, harry),    married(janet, james),
+          married(kari, karl),      married(lorrie, leon),    married(martha, mark),
+          married(nonnie, nero),    married(oma, owen),       married(paula, paul),
+          married(susan, steve),    married(terri, terry),    married(wendy, walt),
+          married(alice, art),      married(maria, melvin),   married(nancy, neil),
+          married(prissie, peter),  married(jane, jack),      married(christy, carlos),
+          married(regina, ray)
+       ])
+).
+
+/*  Here's the family shown graphically:
+
+                               Steve |--- m7
+                Martha |          |  |--- m6
+                    |  |------ Susan |--- m5
+              /-- Mark |             |--- m4
+             /
+            /             /-- Rachel
+           /             /
+          /             /
+  Callie |             |
+      |  |----- Lorrie |
+    Carl |          |  |------- Paul |
+          \       Leon |          |  |--- m3
+           |           |       Paula |
+           |            \
+           |             \
+           |              \----- Oma |--- f2
+           |                      |  |
+           |                    Owen |--- m1
+           |
+           |                            /----- Ray |
+           |                           /        |  |--- m29
+           |                          /     Regina |
+           |                  Nonnie |
+           |                      |  |
+           |              /---- Nero |----- Angela
+           |             /
+           |            /
+            \---- Karl |                    Carlos |--- f28
+                    |  |                        |  |--- m27
+                  Kari |                /- Christy |--- f26
+                        \              /
+                         \            /
+                          \--- Janet |
+                                  |  |----- Calvin
+                               James |
+                                      \
+                                       \
+                                        \---- Jack |--- f25
+                                                |  |--- m24
+                                        /---- Jane |--- f23
+                                       /
+                                      /
+                               Helen |
+                                  |  |-- Frederick
+                           /-- Harry |
+                          /           \
+                         |             \
+                         |              \- Prissie |--- f22
+                         |                      |  |
+                         |                   Peter |--- f21
+                         |
+                         |    George
+                         |        |
+                        /  /--  Gail
+                       |  /                   Neil |--- f20
+                   Bob |-/                      |  |--- f19
+                    |  |                /--- Nancy |--- m18
+              Beatrice |-\             /
+                       |  \           /
+                        \  \- Fannie |
+                         |        |  |-- Cornelia
+                         |      Fred |
+                         |            \
+                         |             \
+                         |              \-- Melvin |--- m17
+                         |                      |  |
+                         |                   Maria |--- m16
+                         |
+                         |                   Alice |--- m15
+                         |                      |  |--- f14
+                         |              /----- Art |--- m13
+                         |             /
+                          \           /
+                           \--- Eric |
+                                  |  |------- Umo
+                           /-- Elisa |
+                          /           \
+                         /             \
+                    Ann |               \--- Wendy |--- f12
+                     |  |                       |  |
+                 Alfred |                     Walt |--- m11
+                         \
+                          \
+                           \-- David | ----- Jonas
+                                  |  |
+                              Deanna |
+                                      \
+                                       \
+                                        \--- Terry |--- m10
+                                                |  |--- m9
+                                             Terri |--- f8
+*/

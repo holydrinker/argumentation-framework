@@ -1,0 +1,32 @@
+% Example 4 from "On the Acceptability of Arguments in BAF's" (Cayrol,
+% Lagasquie-Schiex)
+
+baf.		% info that we have a BAF
+
+% extensions
+%d_adm.		% d-admissible (Dung)
+%s_adm.         % to compute s-admissible extensions (safe).
+%c_adm.		% c-admissible (closed).
+%closed.
+%comp.		% to compute complete extensions.
+%ground.	% to compute the grounded extension.
+%safe.		
+%stable.	% to compute stable extensions.
+d_prefex.		% to compute d-preferred extensions.
+%s_prefex.		% to compute s-preferred extensions.
+%c_prefex.		% to compute c-preferred extensions.
+
+
+arg(a1).
+arg(a2).
+arg(b).
+arg(c).
+arg(h).
+%arg(a3).
+
+att(a1,c).
+att(h,b).
+
+support(a1,a2).
+support(a2,b).
+support(h,c).

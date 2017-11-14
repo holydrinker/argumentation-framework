@@ -1,0 +1,21 @@
+It is necessary to run DLV together with the input file and the program file for the specific semantics on the command line. The output are answer sets specifying the required semantics. For better readability it is useful to use the filter option of DLV.
+For example consider the execution for the stable semantics with the AF sepcified in the input file "input.dl":
+
+$ ./dlv.bin input.dl stable.dl -filter=in
+
+In the resulting answer sets the fact in/1 denotes the arguments which are in the stable extension. 
+NOTE: It is not possible to compute several semantics at the same time, this would give wrong results!
+
+
+Additionally, for BAFs, it is required to add the file baf.dl to the input, to specify, that we are dealing with a BAF.
+$ ./dlv.bin baf.dl prefex.dl example_large.dl -filter=in
+
+	DLV [build BEN/Dec 17 2012   gcc 4.6.1]
+
+	{in(female(alice)), in(married(alice,art))}
+
+	{in(neg(female(alice))), in(neg(married(alice,art)))}
+
+
+To write results on a file, just add "> filename.exts" to the input. You may add the option "-silent" to avoid verbose information.
+$ ./dlv.bin baf.dl prefex.dl example_large.dl -filter=in -silent > example_large.exts

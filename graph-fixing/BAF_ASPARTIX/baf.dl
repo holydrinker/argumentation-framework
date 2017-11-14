@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Encodings for BAFs
+% to compute: d-admissible,
+%    	      c-admissible,
+%	      s-admissible,
+%	      d-preferred,
+%	      c-preferred and
+%	      s-preferred extensions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+adm :- d_adm, baf, not input_error.		% d-admissible extensions for BAF's
+						%  are the same as the standard admissible extensions
+adm :- prefex, not baf, not input_error.
+comp :- ground, not input_error.		% every grounded ext. is also a complete ext.
+prefex :- d_prefex, baf, not input_error.	% d-preferred ext. for BAF's are the same as
+			 			% standard pref. ext.
+d_adm :- d_prefex, baf, not input_error.		
+closed :- c_adm, baf, not input_error.		% c-adm. ext. for BAF's need to be closed
+safe :- s_adm, not input_error.			% s-adm. ext. for BAF's need to be safe
+s_adm :- s_prefex, baf, not input_error.
+c_adm :- c_prefex, baf, not input_error.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	support and defeat for BAF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% argument x is supported by argument y
+%supp(X,Y) :- supports(X,Y).
+support(X,Z) :- support(X,Y), support(Y,Z).
+
+%% set-supports: argument x is supported by the set S
+supported(X) :- supp(Y,X), in(Y).
+
+%% defeats (BAF)
+defeat(X,Y) :- att(Z,Y), support(X,Z), baf. %supported defeat
+defeat(X,Y) :- att(X,Y), baf.	     %supported defeat
+defeat(X,Y) :- att(X,Z), support(Z,Y), baf. %indirekt defeat
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% an argument x defeats an argument y if x attacks y
+defeat(X,Y) :- att(X,Y).
+
+%% Guess a set S \subseteq A
+in(X) :- not out(X), arg(X).
+out(X) :- not in(X), arg(X).
+
+%% S has to be conflict-free
+:- in(X), in(Y), defeat(X,Y).
+
+%% The argument x is defeated by the set S
+defeated(X) :- in(Y), defeat(Y,X).
+
+%% The argument x is not defended by S
+not_defended(X) :- defeat(Y,X), not defeated(Y).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% speciall semantics for BAF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% safe
+:- supported(B), defeated(B), safe.	
+:- defeated(B), in(B), safe.
+
+%% s-admissible 
+:- in(X), not_defended(X), s_adm.
+
+%% closed
+:- supp(X,Y), out(Y),in(X), closed.
+:- supp(X,Y), in(Y), out(X), closed.
+
+%% c_admissible
+:- in(X), not_defended(X), c_adm.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For the remaining part we need to put an order on the domain.
+% Therefore, we define a successor-relation with infinum and supremum 
+% as follows 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+lt(X,Y) :- arg(X),arg(Y), X<Y, not input_error.
+nsucc(X,Z) :- lt(X,Y), lt(Y,Z).
+succ(X,Y) :- lt(X,Y), not nsucc(X,Y).
+ninf(X) :- lt(Y,X).
+nsup(X) :- lt(X,Y).
+inf(X) :- not ninf(X), arg(X).
+sup(X) :- not nsup(X), arg(X).
+
+%% Guess S' \supseteq S for classical pref. ext.
+
+inN(X) v outN(X) :- out(X), prefex, not input_error.
+inN(X) :- in(X), prefex, not input_error.
+
+%% Guess S' \supseteq S for s-preferred
+inN(X) v outN(X) :- out(X), s_prefex, not input_error.
+inN(X) :- in(X), s_prefex.
+
+%% Guess S' \supseteq S for c-preferred
+inN(X) v outN(X) :- out(X), c_prefex, not input_error.
+inN(X) :- in(X), c_prefex.
+
+%% If S' = S then spoil.
+%% Use the sucessor function and check starting from supremum whether
+%% elements in S' is also in S. If this is not the case we "stop"
+%% If we reach the supremum we spoil up.
+
+% eq indicates whether a guess for S' is equal to the guess for S
+eq_upto(Y) :- inf(Y), in(Y), inN(Y), not semis.
+eq_upto(Y) :- inf(Y), out(Y), outN(Y), not semis.
+
+eq_upto(Y) :- succ(Z,Y), in(Y), inN(Y), eq_upto(Z).
+eq_upto(Y) :- succ(Z,Y), out(Y), outN(Y), eq_upto(Z).
+
+eq :- sup(Y), eq_upto(Y). 
+
+%% get those X \notin S' which are not defeated by S'
+%% using successor again...
+
+undefeated_upto(X,Y) :- inf(Y), outN(X), outN(Y), prefex.
+undefeated_upto(X,Y) :- inf(Y), outN(X),  not defeat(Y,X), prefex.
+
+undefeated_upto(X,Y) :- inf(Y), outN(X), outN(Y), semis.
+undefeated_upto(X,Y) :- inf(Y), outN(X),  not defeat(Y,X), semis.
+
+undefeated_upto(X,Y) :- succ(Z,Y), undefeated_upto(X,Z), outN(Y).
+undefeated_upto(X,Y) :- succ(Z,Y), undefeated_upto(X,Z), not defeat(Y,X).
+
+undefeated(X) :- sup(Y), undefeated_upto(X,Y).
+
+%% spoil if S' equals S for all preferred extensions
+spoil :- eq.
+
+%% S' has to be conflictfree - otherwise spoil
+spoil :- inN(X), inN(Y), defeat(X,Y), c_prefex.
+spoil :- inN(X), inN(Y), defeat(X,Y), prefex.
+
+%% set-supports
+supportedN(X) :- supp(Y,X), inN(Y).
+
+%% S' has to be safe for s-preferred
+spoil :- supportedN(B), defeat(X,B), inN(X), s_prefex.	
+spoil :- defeat(X,B), inN(X), inN(B), s_prefex.
+
+%% S' has to be closed for c-preferred
+spoil :- supp(X,Y), outN(Y), inN(X), c_prefex.
+spoil :- supp(X,Y), inN(Y), outN(X), c_prefex.
+
+%% S' has to be admissible - otherwise spoil
+spoil :- inN(X), outN(Y), defeat(Y,X), undefeated(Y).
+
+inN(X) :- spoil, arg(X), not input_error.
+outN(X) :- spoil, arg(X), not input_error.
+
+%% do the final spoil-thing ...
+:- not spoil, prefex.
+:- not spoil, s_prefex.
+:- not spoil, c_prefex.
+

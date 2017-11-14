@@ -1,0 +1,6 @@
+arg(female(alice)).
+arg(neg(female(alice))).
+arg(neg(married(alice,art))).
+arg(married(alice,art)).
+att(female(alice),neg(female(alice))).
+support(married(alice,art),female(alice)).

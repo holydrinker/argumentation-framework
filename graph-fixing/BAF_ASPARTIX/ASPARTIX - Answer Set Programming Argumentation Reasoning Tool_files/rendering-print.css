@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+body
+{
+    background-color: #FFF;
+	background-image: none;
+    color: #000;
+	text-align: left;
+}
+
+#tucsWrap
+{
+	width: auto;
+	border: none;
+}
+
+#tucsHeader #tucsBanner
+{
+    text-align: center;
+}
+
+#tucsHeader #tucsBanner img
+{
+    width: 100%;
+}
+
+#tucsHeader #tucsNav,
+#tucsHeader #tucsPath,
+#tucsHeader #tucsTools,
+#tucsFooter
+{
+	display: none;
+}
+
+
+#tucsContent
+{
+	border-top: none;
+    padding: 2em 26px 0 50px;
+    margin: 0;
+}
+
+/* ## Beim Drucken die URLs mit anzeigen
+   ## ==================================
+#tucsContent a[href]:after
+{
+    background-color: inherit;
+	content: ' <' attr(href) '>';
+	color: #999;
+}
+
+#tucsContent a[href^='http']
+{
+	background: none;
+	padding-right: 0;
+}
+*/
+
+#tucsContent a[href^='http']:hover
+{
+	background: none;
+}
